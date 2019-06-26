@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pickle
 import pandas as pd
 
@@ -6,7 +8,12 @@ data = pd.read_csv(PATH_TO_DATA, sep='\t', header=None)
 data.columns = ['UId', 'ItemId', 'BrandId', 'MiddlesortId', 'ClickTime', 'Date']
 data = data[['UId', 'ItemId', 'BrandId', 'MiddlesortId', 'ClickTime']]
 
+"""
+key就是所有的category的内容
 
+m就是把这些key映射成为对应的id，从0开始
+
+"""
 def build_map(df, col_name):
     key = df[col_name].unique().tolist()
     m = dict(zip(key, range(len(key))))
