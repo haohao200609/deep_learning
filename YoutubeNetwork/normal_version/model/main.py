@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import time
 import pickle
@@ -41,6 +42,10 @@ if __name__ == '__main__':
 
     # init args
     args = Args()
+
+    """
+    brand_list保存的是所有数据去重之后，所有的brand的新的index，
+    """
     args.brand_list = brand_list
     args.msort_list = msort_list
     args.item_count = item_count
@@ -73,6 +78,18 @@ if __name__ == '__main__':
 
                 epoch_size = round(len(train_set) / train_batch_size)
                 loss_sum = 0.0
+                """
+                uij是一个tupple，里面包括
+                 (u, i, y, hist_i, sl, b, lt, qr)
+                u是每个玩家的id
+                i这个玩家当次点击正负样本item的index
+                y是上面那个正负样本item的index对应的label，1和0
+                hist_i是吧所有玩家点击的item index对应到一个column长度均等的一个方阵,但是这里item的index对应是0的然后这里hist_i填充的也是0，所以在embedding的时候可能会出错
+
+
+                """
+
+
                 for _, uij in DataInput(train_set, train_batch_size):
                     loss = model.train(sess, uij, lr, keep_prob=0.95)
                     loss_sum += loss
